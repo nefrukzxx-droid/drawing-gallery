@@ -441,6 +441,9 @@ publishButton.addEventListener("click", async () => {
 
 const { data: userData, error: userError } =
     await supabaseClient.auth.getUser();
+    console.log("USER ID:", userData.user?.id);
+console.log("OWNER ID:", userData.user?.id);
+console.log("STATUS:", "pending");
 
 if (userError || !userData.user) {
     throw new Error("Сначала войдите в аккаунт.");
