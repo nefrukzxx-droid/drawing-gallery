@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея рисунков</title>
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+
+    <nav class="navigation">
+        <a href="index.html">← на главную</a>
+        <a href="drawing.html">порисовать →</a>
+    </nav>
+
+    <main class="gallery-container">
+        <header class="gallery-header">
+            <div>
+                <p class="eyebrow">DRAWING GALLERY</p>
+                <h1>Галерея</h1>
+                <p class="subtitle">
+                    Маленькое место для больших шедевров.
+                </p>
+            </div>
+
+            <div class="gallery-count">
+                <span>Работ опубликовано</span>
+                <strong id="drawing-count">—</strong>
+            </div>
+        </header>
+
+        <section id="gallery">
+            <p class="message">Загружаем рисунки...</p>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="gallery.js"></script>
+
+</body>
+</html>

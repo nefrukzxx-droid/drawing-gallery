@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>моя рисовалка</title>
+    <link rel="stylesheet" href="drawing.css">
+</head>
+<body>
+
+    <a href="index.html" class="back-link">← назад</a>
+
+    <h1>HEY BOSS</h1>
+    <p>нарисуй что-нибудь интересное</p>
+
+    <div class="drawing-island">
+
+        <section class="auth-panel">
+            <h2>Вход модератора</h2>
+
+            <form id="login-form">
+                <input
+                    type="email"
+                    id="moderator-email"
+                    placeholder="Email"
+                    autocomplete="username"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="moderator-password"
+                    placeholder="Пароль"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit">Войти</button>
+            </form>
+
+            <div id="account-panel" hidden>
+                <p id="account-message"></p>
+                <button id="logout" type="button">Выйти</button>
+            </div>
+
+            <p id="auth-message" aria-live="polite"></p>
+        </section>
+
+        <div class="toolbar">
+
+            <label class="color-picker">
+                Цвет
+                <input type="color" id="color" value="#6e7687">
+            </label>
+
+            <button id="brush" class="active">Кисть</button>
+            <button id="eraser">Ластик</button>
+            <button id="eyedropper">Пипетка</button>
+
+            <label class="size-control">
+                Размер:
+                <input type="range" id="size" min="1" max="100" value="10">
+            </label>
+
+            <button id="undo" disabled>↶ Отменить</button>
+            <button id="redo" disabled>↷ Повторить</button>
+
+            <button id="clear">Очистить</button>
+
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="canvas" width="2000" height="2000"></canvas>
+        </div>
+
+        <p class="canvas-info">Размер холста: 2000 × 2000 px</p>
+
+        <div class="save-panel">
+
+            <label for="drawing-name">Название рисунка</label>
+
+            <input
+                type="text"
+                id="drawing-name"
+                placeholder="Например: мой первый шедевр"
+                maxlength="60"
+            >
+
+            <button id="download" class="download-button">
+                ↓ Скачать PNG
+            </button>
+
+            <button id="publish" class="publish-button">
+                ✧ Добавить в галерею
+            </button>
+
+            <p id="save-message" aria-live="polite"></p>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="drawing.js"></script>
+</body>
+</html>

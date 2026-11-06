@@ -1,0 +1,72 @@
+body {
+    background-color: #dce4f2;
+}
+h1 {
+    color: #131924;
+    font-size: 50px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+}
+
+p {
+    color:#9cabc6;
+    font-size: 25px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+}
+.попа {
+    color:#6e7687;
+    font-size: 26px;
+    margin-top: 0px;
+}
+.сиська{
+    color:#aeb9d0;
+    font-size: 26px;
+    margin-top: 0px;
+}
+.island {
+    background-color: #f6f8fb;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 5px;
+    margin-left: 20px;
+    padding-left: 10px;
+    width: 500px;
+}
+.island img {
+    width: 400px;
+    height: auto;
+    border-radius: 15px;
+    display: block;
+    margin: 20px auto 0;
+}
+.drawing-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    background-color: #f6f8fb;
+    color: #6e7687;
+
+    text-decoration: none;
+    font-size: 23px;
+
+    width: 250px;
+    padding: 15px;
+    border-radius: 15px;
+
+    margin: 20px 0 0 20px;
+
+    transition: 0.3s;
+}
+
+.drawing-link span {
+    font-size: 30px;
+}
+
+.drawing-link:hover {
+    background-color: #cbd6e8;
+    transform: translateX(5px);
+}

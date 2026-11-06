@@ -1,0 +1,202 @@
+body {
+    background-color: #dce4f2;
+    color: #131924;
+    font-family: Arial, sans-serif;
+}
+
+.back-link {
+    display: inline-block;
+    margin: 20px;
+    color: #6e7687;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+h1 {
+    margin-left: 20px;
+    font-size: 40px;
+}
+
+body > p {
+    margin-left: 20px;
+    color: #9cabc6;
+    font-size: 20px;
+}
+
+.drawing-island {
+    background-color: #f6f8fb;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+    max-width: 850px;
+}
+
+.auth-panel {
+    padding: 15px;
+    margin-bottom: 22px;
+    background: #edf1f8;
+    border-radius: 12px;
+}
+
+.auth-panel h2 {
+    margin-top: 0;
+    color: #6e7687;
+    font-size: 20px;
+}
+
+#login-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#login-form input {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px;
+    border: 1px solid #dce4f2;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#account-panel[hidden] {
+    display: none;
+}
+
+#account-message,
+#auth-message {
+    color: #6e7687;
+    font-size: 14px;
+    margin: 10px 0 0;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #dce4f2;
+    color: #131924;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #cbd6e8;
+}
+
+button.active {
+    background-color: #aeb9d0;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.color-picker,
+.size-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6e7687;
+}
+
+#color {
+    width: 45px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#size {
+    width: 100px;
+    cursor: pointer;
+}
+
+.canvas-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #dce4f2;
+    background: white;
+}
+
+#canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    background-color: white;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.canvas-info {
+    font-size: 14px;
+    margin: 12px 0 0;
+}
+
+.save-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #dce4f2;
+}
+
+.save-panel label {
+    color: #6e7687;
+    font-size: 16px;
+}
+
+#drawing-name {
+    padding: 13px;
+    border: 1px solid #dce4f2;
+    border-radius: 9px;
+    background-color: white;
+    color: #131924;
+    font-size: 16px;
+    outline: none;
+}
+
+#drawing-name:focus {
+    border-color: #9cabc6;
+}
+
+.download-button,
+.publish-button {
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.download-button {
+    background-color: #dce4f2;
+}
+
+.download-button:hover {
+    background-color: #cbd6e8;
+}
+
+.publish-button {
+    background-color: #aeb9d0;
+}
+
+.publish-button:hover {
+    background-color: #cbd6e8;
+}
+
+#save-message {
+    font-size: 14px;
+    margin: 0;
+    color: #6e7687;
+}

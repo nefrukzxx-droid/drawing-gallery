@@ -1,0 +1,160 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #dce4f2;
+    color: #131924;
+    font-family: Arial, sans-serif;
+}
+
+.back-link {
+    display: inline-block;
+    margin: 20px;
+    color: #6e7687;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.admin-container {
+    width: min(1000px, calc(100% - 32px));
+    margin: 20px auto 60px;
+    padding: 35px;
+    background: #f7f9fc;
+    border: 1px solid #cbd5e5;
+    border-radius: 22px;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.admin-header h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+}
+
+.admin-header p {
+    margin: 0;
+    color: #6e7687;
+}
+
+.admin-label {
+    padding: 9px 13px;
+    border-radius: 10px;
+    background: #e5ebf5;
+    color: #586b89;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.admin-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 20px;
+    margin-bottom: 25px;
+    background: #e9eef7;
+    border-radius: 13px;
+    color: #59677d;
+}
+
+.admin-stats strong {
+    color: #263b5b;
+    font-size: 23px;
+}
+
+.drawing-card {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: white;
+    border: 1px solid #dce3ee;
+    border-radius: 16px;
+}
+
+.drawing-card h2 {
+    margin: 0 0 8px;
+    font-size: 21px;
+    overflow-wrap: anywhere;
+}
+
+.drawing-date {
+    margin: 0 0 16px;
+    color: #8791a2;
+    font-size: 13px;
+}
+
+.drawing-preview {
+    display: block;
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    background: #edf1f7;
+    border-radius: 12px;
+}
+
+.drawing-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.drawing-actions button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.approve-button {
+    background: #dcecdf;
+    color: #315b3c;
+}
+
+.reject-button {
+    background: #f3e1e1;
+    color: #854343;
+}
+
+.drawing-actions button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+.loading,
+.empty-message,
+.error-message {
+    padding: 25px;
+    text-align: center;
+    color: #68758a;
+}
+
+.error-message {
+    color: #a34444;
+}
+
+@media (max-width: 600px) {
+    .admin-container {
+        padding: 20px;
+    }
+
+    .admin-header h1 {
+        font-size: 27px;
+    }
+
+    .drawing-actions button {
+        flex: 1;
+    }
+}
