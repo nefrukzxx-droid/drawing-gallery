@@ -437,16 +437,23 @@ publishButton.addEventListener("click", async () => {
                 }
             }, "image/png");
         });
+// ПРОВЕРЯЕМ, ЧТО ПОЛЬЗОВАТЕЛЬ ВОШЁЛ
 
-        // Уникальное имя файла
-        const fileName =
-            crypto.randomUUID() + ".png";
+const { data: userData, error: userError } =
+    await supabaseClient.auth.getUser();
 
-        const filePath =
-            session.user.id + "/" + fileName;
+if (userError || !userData.user) {
+    throw new Error("Сначала войдите в аккаунт.");
+}
 
+// Уникальное имя файла
+const fileName =
+    crypto.randomUUID() + ".png";
 
-        // ЗАГРУЖАЕМ ФАЙЛ В STORAGE
+const filePath =
+    userData.user.id + "/" + fileName;
+
+        // ЗАГРУЖАЕМ ИЗОБРАЖЕНИЕ
 
         const { error: uploadError } =
             await supabaseClient.storage
@@ -460,7 +467,6 @@ publishButton.addEventListener("click", async () => {
             throw uploadError;
         }
 
-
         // СОХРАНЯЕМ ИНФОРМАЦИЮ В ТАБЛИЦЕ
 
         const { error: databaseError } =
@@ -469,12 +475,22 @@ publishButton.addEventListener("click", async () => {
                 .insert({
                     title: drawingName,
                     image_url: filePath,
-                    status: "pending"
+                    status: "pending",
+                    owner_id: userData.user.id
                 });
 
         if (databaseError) {
-            throw databaseError;
-        }
+    console.error("ОШИБКА БАЗЫ:", databaseError);
+    console.log("ID пользователя:", userData.user.id);
+    console.log("Данные для отправки:", {
+        title: drawingName,
+        image_url: filePath,
+        status: "pending",
+        owner_id: userData.user.id
+    });
+
+    throw databaseError;
+}
 
         saveMessage.textContent =
             "Рисунок загружен! Он ожидает одобрения модератора.";
