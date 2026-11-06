@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dce4f2;
+    color: #131924;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.auth-island {
+    width: 100%;
+    max-width: 440px;
+    padding: 35px;
+    background: #f5f7fb;
+    border-radius: 25px;
+    box-shadow: 0 12px 35px #8c9bb833;
+}
+
+.back-link {
+    color: #6e7687;
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #788397;
+    margin-bottom: 28px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #e5eaf3;
+    color: #526078;
+}
+
+.tabs button.active {
+    background: #cbd8ee;
+    color: #131924;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-size: 14px;
+}
+
+input {
+    padding: 14px;
+    border: 1px solid #d4dce9;
+    border-radius: 12px;
+    background: white;
+    font-size: 15px;
+}
+
+#submitButton {
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #aebfdd;
+    color: #131924;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+}
