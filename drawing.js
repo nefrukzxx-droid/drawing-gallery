@@ -1,3 +1,4 @@
+alert("DRAWING.JS ЗАГРУЗИЛСЯ");
 // SUPABASE
 const SUPABASE_URL = "https://yeebjtnibglyejgxqvhm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_VY60RiLPCOavVZ0TWIHxBQ_NpQ5Lpwn";
@@ -694,4 +695,3 @@ const filePath =
         publishButton.disabled = false;
     }
 });
-alert("DRAWING.JS ЗАГРУЗИЛСЯ");
