@@ -219,6 +219,7 @@ function redo() {
 
 function selectTool(tool) {
     currentTool = tool;
+    saveMessage.textContent = "Выбран инструмент: " + tool;
 
     brushButton.classList.toggle("active", tool === "brush");
     eraserButton.classList.toggle("active", tool === "eraser");
@@ -231,6 +232,18 @@ function selectTool(tool) {
     triangleButton.classList.toggle("active", tool === "triangle");
     lineButton.classList.toggle("active", tool === "line");
 }
+// ПЕРЕКЛЮЧЕНИЕ ИНСТРУМЕНТОВ
+
+brushButton.addEventListener("click", () => selectTool("brush"));
+eraserButton.addEventListener("click", () => selectTool("eraser"));
+eyedropperButton.addEventListener("click", () => selectTool("eyedropper"));
+
+fillButton.addEventListener("click", () => selectTool("fill"));
+
+rectangleButton.addEventListener("click", () => selectTool("rectangle"));
+circleButton.addEventListener("click", () => selectTool("circle"));
+triangleButton.addEventListener("click", () => selectTool("triangle"));
+lineButton.addEventListener("click", () => selectTool("line"));
 
 // РИСОВАНИЕ ГЕОМЕТРИЧЕСКИХ ФИГУР
 
@@ -384,10 +397,7 @@ canvas.addEventListener("pointerdown", (event) => {
 
     if (currentTool === "fill") {
         saveState();
-        floodFill(
-            Math.floor(pos.x),
-            Math.floor(pos.y)
-        );
+        floodFill(Math.floor(pos.x), Math.floor(pos.y));
         return;
     }
 
@@ -398,7 +408,6 @@ canvas.addEventListener("pointerdown", (event) => {
         currentTool === "line"
     ) {
         saveState();
-
         shapeStart = pos;
         shapeBase = ctx.getImageData(
             0, 0, canvas.width, canvas.height
@@ -431,10 +440,6 @@ canvas.addEventListener("pointerdown", (event) => {
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
 });
-
-    // ЗАЛИВКА И ФИГУРЫ ПОКА ПРОПУСКАЮТСЯ
-    
-
 
 // ПРОДОЛЖЕНИЕ РИСОВАНИЯ
 
@@ -689,3 +694,4 @@ const filePath =
         publishButton.disabled = false;
     }
 });
+alert("DRAWING.JS ЗАГРУЗИЛСЯ");

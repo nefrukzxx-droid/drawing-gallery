@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -40,7 +41,7 @@
 
             <div id="account-panel" hidden>
                 <p id="account-message"></p>
-                <button id="logout" type="button">Выйти</button>
+                <button type="button" id="logout">Выйти</button>
             </div>
 
             <p id="auth-message" aria-live="polite"></p>
@@ -53,33 +54,32 @@
                 <input type="color" id="color" value="#6e7687">
             </label>
 
-            <button id="brush" class="active">Кисть</button>
-            <button id="eraser">Ластик</button>
-            <button id="eyedropper">Пипетка</button>
-            <button id="fill">Заливка</button>
+            <button type="button" id="brush" class="active">Кисть</button>
+            <button type="button" id="eraser">Ластик</button>
+            <button type="button" id="eyedropper">Пипетка</button>
+            <button type="button" id="fill">Заливка</button>
 
-<button id="rectangle">Прямоугольник</button>
-<button id="circle">Круг</button>
-<button id="triangle">Треугольник</button>
-<button id="line">Линия</button>
+            <button type="button" id="rectangle">Прямоугольник</button>
+            <button type="button" id="circle">Круг</button>
+            <button type="button" id="triangle">Треугольник</button>
+            <button type="button" id="line">Линия</button>
 
-<label>
-    Режим фигур:
-    <select id="shape-mode">
-        <option value="stroke">Контур</option>
-        <option value="fill">Заливка</option>
-    </select>
-</label>
+            <label>
+                Режим фигур:
+                <select id="shape-mode">
+                    <option value="stroke">Контур</option>
+                    <option value="fill">Заливка</option>
+                </select>
+            </label>
 
             <label class="size-control">
                 Размер:
                 <input type="range" id="size" min="1" max="100" value="10">
             </label>
 
-            <button id="undo" disabled>↶ Отменить</button>
-            <button id="redo" disabled>↷ Повторить</button>
-
-            <button id="clear">Очистить</button>
+            <button type="button" id="undo" disabled>↶ Отменить</button>
+            <button type="button" id="redo" disabled>↷ Повторить</button>
+            <button type="button" id="clear">Очистить</button>
 
         </div>
 
@@ -100,11 +100,11 @@
                 maxlength="60"
             >
 
-            <button id="download" class="download-button">
+            <button type="button" id="download" class="download-button">
                 ↓ Скачать PNG
             </button>
 
-            <button id="publish" class="publish-button">
+            <button type="button" id="publish" class="publish-button">
                 ✧ Добавить в галерею
             </button>
 
