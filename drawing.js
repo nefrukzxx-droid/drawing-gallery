@@ -433,45 +433,7 @@ canvas.addEventListener("pointerdown", (event) => {
 });
 
     // ЗАЛИВКА И ФИГУРЫ ПОКА ПРОПУСКАЮТСЯ
-    if (
-        currentTool === "rectangle" ||
-        currentTool === "circle" ||
-        currentTool === "triangle" ||
-        currentTool === "line"
-    ) {
-        saveState();
-
-        shapeStart = pos;
-        shapeBase = ctx.getImageData(
-            0, 0, canvas.width, canvas.height
-        );
-
-        isDrawing = true;
-        canvas.setPointerCapture(event.pointerId);
-        return;
-    }
-
-    saveState();
-
-    isDrawing = true;
-    canvas.setPointerCapture(event.pointerId);
-
-    ctx.lineWidth = Number(sizeInput.value);
-
-    if (currentTool === "eraser") {
-        ctx.strokeStyle = "#ffffff";
-        ctx.fillStyle = "#ffffff";
-    } else {
-        ctx.strokeStyle = colorInput.value;
-        ctx.fillStyle = colorInput.value;
-    }
-
-    ctx.beginPath();
-    ctx.arc(pos.x, pos.y, ctx.lineWidth / 2, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
+    
 
 
 // ПРОДОЛЖЕНИЕ РИСОВАНИЯ
