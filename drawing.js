@@ -29,6 +29,14 @@ const nameInput = document.getElementById("drawing-name");
 const brushButton = document.getElementById("brush");
 const eraserButton = document.getElementById("eraser");
 const eyedropperButton = document.getElementById("eyedropper");
+const fillButton = document.getElementById("fill");
+
+const rectangleButton = document.getElementById("rectangle");
+const circleButton = document.getElementById("circle");
+const triangleButton = document.getElementById("triangle");
+const lineButton = document.getElementById("line");
+
+const shapeModeInput = document.getElementById("shape-mode");
 
 const undoButton = document.getElementById("undo");
 const redoButton = document.getElementById("redo");
@@ -42,6 +50,8 @@ const saveMessage = document.getElementById("save-message");
 
 let isDrawing = false;
 let currentTool = "brush";
+let shapeStart = null;
+let shapeBase = null;
 
 let undoHistory = [];
 let redoHistory = [];
@@ -213,8 +223,142 @@ function selectTool(tool) {
     brushButton.classList.toggle("active", tool === "brush");
     eraserButton.classList.toggle("active", tool === "eraser");
     eyedropperButton.classList.toggle("active", tool === "eyedropper");
+
+    fillButton.classList.toggle("active", tool === "fill");
+
+    rectangleButton.classList.toggle("active", tool === "rectangle");
+    circleButton.classList.toggle("active", tool === "circle");
+    triangleButton.classList.toggle("active", tool === "triangle");
+    lineButton.classList.toggle("active", tool === "line");
 }
 
+// РИСОВАНИЕ ГЕОМЕТРИЧЕСКИХ ФИГУР
+
+function drawShape(tool, start, end) {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+
+    ctx.lineWidth = Number(sizeInput.value);
+    ctx.strokeStyle = colorInput.value;
+    ctx.fillStyle = colorInput.value;
+
+    ctx.beginPath();
+
+    if (tool === "rectangle") {
+        ctx.rect(start.x, start.y, dx, dy);
+    }
+
+    if (tool === "circle") {
+        const radius = Math.sqrt(dx * dx + dy * dy);
+        ctx.arc(start.x, start.y, radius, 0, Math.PI * 2);
+    }
+
+    if (tool === "triangle") {
+        ctx.moveTo(start.x + dx / 2, start.y);
+        ctx.lineTo(start.x + dx, start.y + dy);
+        ctx.lineTo(start.x, start.y + dy);
+        ctx.closePath();
+    }
+
+    if (tool === "line") {
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+    }
+
+    if (tool === "line" || shapeModeInput.value === "stroke") {
+        ctx.stroke();
+    } else {
+        ctx.fill();
+    }
+}
+// ЗАЛИВКА
+
+function floodFill(startX, startY) {
+    const imageData = ctx.getImageData(
+        0, 0, canvas.width, canvas.height
+    );
+
+    const data = imageData.data;
+    const width = canvas.width;
+    const height = canvas.height;
+
+    const startIndex = (startY * width + startX) * 4;
+
+    const target = [
+        data[startIndex],
+        data[startIndex + 1],
+        data[startIndex + 2]
+    ];
+
+    const hex = colorInput.value;
+    const replacement = [
+        parseInt(hex.slice(1, 3), 16),
+        parseInt(hex.slice(3, 5), 16),
+        parseInt(hex.slice(5, 7), 16)
+    ];
+
+    if (target.every((v, i) => v === replacement[i])) return;
+
+    const tolerance = 24;
+
+    function matches(x, y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return false;
+        }
+
+        const i = (y * width + x) * 4;
+
+        return Math.abs(data[i] - target[0]) <= tolerance &&
+               Math.abs(data[i + 1] - target[1]) <= tolerance &&
+               Math.abs(data[i + 2] - target[2]) <= tolerance;
+    }
+
+    const stack = [[startX, startY]];
+
+    while (stack.length) {
+        const [x, y] = stack.pop();
+
+        if (!matches(x, y)) continue;
+
+        let left = x;
+
+        while (left > 0 && matches(left - 1, y)) {
+            left--;
+        }
+
+        let above = false;
+        let below = false;
+
+        for (let px = left; px < width && matches(px, y); px++) {
+            const i = (y * width + px) * 4;
+
+            data[i] = replacement[0];
+            data[i + 1] = replacement[1];
+            data[i + 2] = replacement[2];
+            data[i + 3] = 255;
+
+            if (y > 0) {
+                if (matches(px, y - 1)) {
+                    if (!above) stack.push([px, y - 1]);
+                    above = true;
+                } else {
+                    above = false;
+                }
+            }
+
+            if (y < height - 1) {
+                if (matches(px, y + 1)) {
+                    if (!below) stack.push([px, y + 1]);
+                    below = true;
+                } else {
+                    below = false;
+                }
+            }
+        }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+}
 
 // НАЧАЛО РИСОВАНИЯ
 
@@ -234,15 +378,40 @@ canvas.addEventListener("pointerdown", (event) => {
             .join("");
 
         colorInput.value = hex;
-
         selectTool("brush");
+        return;
+    }
+
+    if (currentTool === "fill") {
+        saveState();
+        floodFill(
+            Math.floor(pos.x),
+            Math.floor(pos.y)
+        );
+        return;
+    }
+
+    if (
+        currentTool === "rectangle" ||
+        currentTool === "circle" ||
+        currentTool === "triangle" ||
+        currentTool === "line"
+    ) {
+        saveState();
+
+        shapeStart = pos;
+        shapeBase = ctx.getImageData(
+            0, 0, canvas.width, canvas.height
+        );
+
+        isDrawing = true;
+        canvas.setPointerCapture(event.pointerId);
         return;
     }
 
     saveState();
 
     isDrawing = true;
-
     canvas.setPointerCapture(event.pointerId);
 
     ctx.lineWidth = Number(sizeInput.value);
@@ -263,6 +432,47 @@ canvas.addEventListener("pointerdown", (event) => {
     ctx.moveTo(pos.x, pos.y);
 });
 
+    // ЗАЛИВКА И ФИГУРЫ ПОКА ПРОПУСКАЮТСЯ
+    if (
+        currentTool === "rectangle" ||
+        currentTool === "circle" ||
+        currentTool === "triangle" ||
+        currentTool === "line"
+    ) {
+        saveState();
+
+        shapeStart = pos;
+        shapeBase = ctx.getImageData(
+            0, 0, canvas.width, canvas.height
+        );
+
+        isDrawing = true;
+        canvas.setPointerCapture(event.pointerId);
+        return;
+    }
+
+    saveState();
+
+    isDrawing = true;
+    canvas.setPointerCapture(event.pointerId);
+
+    ctx.lineWidth = Number(sizeInput.value);
+
+    if (currentTool === "eraser") {
+        ctx.strokeStyle = "#ffffff";
+        ctx.fillStyle = "#ffffff";
+    } else {
+        ctx.strokeStyle = colorInput.value;
+        ctx.fillStyle = colorInput.value;
+    }
+
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, ctx.lineWidth / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+
 
 // ПРОДОЛЖЕНИЕ РИСОВАНИЯ
 
@@ -271,6 +481,19 @@ canvas.addEventListener("pointermove", (event) => {
 
     const pos = getPosition(event);
 
+    // Если рисуем фигуру
+    if (
+        currentTool === "rectangle" ||
+        currentTool === "circle" ||
+        currentTool === "triangle" ||
+        currentTool === "line"
+    ) {
+        ctx.putImageData(shapeBase, 0, 0);
+        drawShape(currentTool, shapeStart, pos);
+        return;
+    }
+
+    // Обычное рисование
     ctx.lineWidth = Number(sizeInput.value);
 
     if (currentTool === "eraser") {
@@ -283,32 +506,28 @@ canvas.addEventListener("pointermove", (event) => {
     ctx.stroke();
 });
 
-
 // ОСТАНОВКА РИСОВАНИЯ
 
-function stopDrawing() {
+function stopDrawing(event) {
+    if (!isDrawing) return;
+
+    if (shapeStart && shapeBase) {
+        const pos = getPosition(event);
+
+        ctx.putImageData(shapeBase, 0, 0);
+        drawShape(currentTool, shapeStart, pos);
+    }
+
     isDrawing = false;
+    shapeStart = null;
+    shapeBase = null;
+
     ctx.beginPath();
 }
 
 canvas.addEventListener("pointerup", stopDrawing);
 canvas.addEventListener("pointercancel", stopDrawing);
 canvas.addEventListener("lostpointercapture", stopDrawing);
-
-
-// ИНСТРУМЕНТЫ
-
-brushButton.addEventListener("click", () => {
-    selectTool("brush");
-});
-
-eraserButton.addEventListener("click", () => {
-    selectTool("eraser");
-});
-
-eyedropperButton.addEventListener("click", () => {
-    selectTool("eyedropper");
-});
 
 
 // ОТМЕНА И ПОВТОР
